@@ -1,11 +1,10 @@
 const animalesCallejeros = [];
-let continuarRegistro = true;
 let continuarBusqueda = true;
 
 function registrarAnimal() {
   let tipoAnimal = prompt("¿Qué tipo de animal viste? (ej. perro, gato, etc.)");
   let ubicacion = prompt("¿Dónde viste al animal?");
-  let fechaVisto = prompt("¿Cuándo viste al animal? (ej. 12-10-2024)");
+  let fechaVisto = prompt("¿Cuándo viste al animal? (ej. 2024-10-12)");
   let detalles = prompt("¿Algún detalle adicional que te gustaría agregar?");
 
   let animal = {
@@ -17,7 +16,7 @@ function registrarAnimal() {
 
   animalesCallejeros.push(animal);
 
-  alert("¡El animal ha sido registrado exitosamente!");
+  alert("¡El animal callejero ha sido registrado exitosamente!");
 }
 
 function buscarPorTipoYUbicacion() {
@@ -39,26 +38,17 @@ function buscarPorTipoYUbicacion() {
   }
 
   if (animalesEncontrados.length > 0) {
-    console.log(
-      "Animales callejeros encontrados en " +
-        buscarUbicacion +
-        " que son de tipo " +
-        buscarTipo +
-        ":"
-    );
-    for (let i = 0; i < animalesEncontrados.length; i++) {
-      console.log(animalesEncontrados);
-    }
+    console.log(animalesEncontrados);
   } else {
     console.log(
-      "No se encontraron " + buscarTipo + " callejeros en " + buscarUbicacion
+      "No se encontraron animales que coincidan con los criterios de búsqueda."
     );
   }
 }
 
 function mostrarResumen() {
   if (animalesCallejeros.length === 0) {
-    alert("No se registraron animales todavía.");
+    alert("No se han registrado animales todavía.");
     return;
   }
 
@@ -96,37 +86,38 @@ function mostrarResumen() {
   }
 }
 
-let primeraRespuesta = prompt("¿Deseas registrar un animal callejero? (si/no)");
+let deseaRegistrar = confirm("¿Deseas registrar un animal callejero?");
+if (deseaRegistrar) {
+  let continuarRegistro = true;
 
-if (primeraRespuesta.toLowerCase() === "si") {
   while (continuarRegistro) {
     registrarAnimal();
 
-    let respuestaUsuario = prompt("¿Deseas registrar otro animal? (si/no)");
-    if (respuestaUsuario.toLowerCase() !== "si") {
+    let respuestaUsuario = confirm("¿Deseas registrar otro animal?");
+    if (!respuestaUsuario) {
       continuarRegistro = false;
     }
   }
 }
 
-let respuestaResumen = prompt(
-  "¿Deseas ver un resumen de todos los animales registrados? (si/no)"
+let respuestaResumen = confirm(
+  "¿Deseas ver un resumen de todos los animales registrados?"
 );
-if (respuestaResumen.toLowerCase() === "si") {
+if (respuestaResumen) {
   mostrarResumen();
 }
 
-let respuestaBusqueda = prompt(
-  "¿Deseas buscar animales callejeros por tipo y ubicación? (si/no)"
+let respuestaBusqueda = confirm(
+  "¿Deseas buscar animales callejeros por tipo y ubicación?"
 );
 
-if (respuestaBusqueda.toLowerCase() === "si") {
+if (respuestaBusqueda) {
   while (continuarBusqueda) {
     buscarPorTipoYUbicacion();
-    let buscarDeNuevo = prompt(
-      "¿Deseas buscar animales en otro tipo o ubicación? (si/no)"
+    let buscarDeNuevo = confirm(
+      "¿Deseas buscar animales en otro tipo o ubicación?"
     );
-    if (buscarDeNuevo.toLowerCase() !== "si") {
+    if (!buscarDeNuevo) {
       continuarBusqueda = false;
     }
   }
