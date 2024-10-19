@@ -3,7 +3,7 @@ const animalesCallejeros = [];
 function registrarAnimal() {
   let tipoAnimal = prompt("¿Qué tipo de animal viste? (ej. perro, gato, etc.)");
   let ubicacion = prompt("¿Dónde viste al animal?");
-  let fechaVisto = prompt("¿Cuándo viste al animal? (ej. 2024-10-12)");
+  let fechaVisto = prompt("¿Cuándo viste al animal? (ej. 10-10-2024)");
   let detalles = prompt("¿Algún detalle adicional que te gustaría agregar?");
 
   let animal = {
