@@ -28,32 +28,29 @@ function buscarPorTipoYUbicacion() {
   let buscarUbicacion = prompt(
     "Ingresa la ubicación donde deseas buscar este animal:"
   ).toLowerCase();
-  let animalesEncontrados = [];
 
-  for (const animal of animalesCallejeros) {
-    if (animal.tipo === buscarTipo && animal.ubicacion === buscarUbicacion) {
-      animalesEncontrados.push(animal);
-    }
-  }
+  let animalesEncontrados = animalesCallejeros.filter(
+    (animal) =>
+      animal.tipo === buscarTipo && animal.ubicacion === buscarUbicacion
+  );
 
   if (animalesEncontrados.length > 0) {
-    for (const animal of animalesCallejeros) {
-      alert(
+    let mensaje = "Animales encontrados:\n\n";
+    animalesEncontrados.forEach((animal) => {
+      mensaje +=
         "Tipo de Animal: " +
-          animal.tipo +
-          " Ubicación: " +
-          animal.ubicacion +
-          " Fecha visto: " +
-          animal.fecha +
-          " Detalles: " +
-          animal.detalles
-      );
-    }
-    console.log(animalesEncontrados);
+        animal.tipo +
+        "\nUbicación: " +
+        animal.ubicacion +
+        "\nFecha visto: " +
+        animal.fecha +
+        "\nDetalles: " +
+        animal.detalles +
+        "\n\n";
+    });
+    alert(mensaje);
   } else {
-    console.log(
-      "No se encontraron animales que coincidan con los criterios de búsqueda."
-    );
+    alert("No se encontraron animales con los criterios especificados.");
   }
 }
 
@@ -63,28 +60,29 @@ function mostrarResumen() {
     return;
   }
 
-  let contadorTipos = {};
-  let contadorUbicaciones = {};
+  const { contadorTipos, contadorUbicaciones } = animalesCallejeros.reduce(
+    (counters, animal) => {
+      counters.contadorTipos[animal.tipo] = (counters.contadorTipos[animal.tipo] || 0) + 1;
+      counters.contadorUbicaciones[animal.ubicacion] = (counters.contadorUbicaciones[animal.ubicacion] || 0) + 1;
+      return counters;
+    },
+    { contadorTipos: {}, contadorUbicaciones: {} }
+  );
 
-  for (const animal of animalesCallejeros) {
-    let { tipo, ubicacion } = animal;
+  let mensaje = "Resumen de Animales Registrados:\n";
+  mensaje += "Total de animales registrados: " + animalesCallejeros.length + "\n\n";
 
-    contadorTipos[tipo] = (contadorTipos[tipo] || 0) + 1;
-    contadorUbicaciones[ubicacion] = (contadorUbicaciones[ubicacion] || 0) + 1;
-  }
-
-  console.log("Resumen de Animales Registrados:");
-  console.log("Total de animales registrados: " + animalesCallejeros.length);
-
-  console.log("Desglose por Tipo de Animal:");
+  mensaje += "Desglose por Tipo de Animal:\n";
   for (let tipo in contadorTipos) {
-    console.log(`${tipo}: ${contadorTipos[tipo]}`);
+    mensaje += `${tipo}: ${contadorTipos[tipo]}\n`;
+  }
+  
+  mensaje += "\nDesglose por Ubicación:\n";
+  for (let ubicacion in contadorUbicaciones) {
+    mensaje += `${ubicacion}: ${contadorUbicaciones[ubicacion]}\n`;
   }
 
-  console.log("Desglose por Ubicación:");
-  for (let ubicacion in contadorUbicaciones) {
-    console.log(`${ubicacion}: ${contadorUbicaciones[ubicacion]}`);
-  }
+  alert(mensaje);
 }
 
 function menuPrincipal() {
